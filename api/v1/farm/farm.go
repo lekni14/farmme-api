@@ -20,7 +20,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// UserAPI is a representation of a FarmAPI
+// FarmAPI is a representation of a FarmAPI
 type FarmAPI struct {
 	FarmRepository repository.FarmRepository
 }
@@ -54,7 +54,7 @@ func (api FarmAPI) AddFarm(c *gin.Context) {
 		appG.Response(http.StatusBadRequest, e.ERROR_EXIST_FARM, nil)
 		return
 	}
-	json.Address = []model.FarmAddress{}
+	json.Address = []model.Farmaddress{}
 	farmID, err := api.FarmRepository.AddFarm(json)
 	if err != nil {
 		log.Println("error AddFarm", err.Error())

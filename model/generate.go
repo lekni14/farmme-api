@@ -6,8 +6,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Farm object for db
-type Farm struct {
+// Generate object for db
+type Generate struct {
 	ID              primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Name            string             `json:"name" bson:"name"`
 	Description     string             `json:"description" bson:"description"`	
@@ -21,16 +21,4 @@ type Farm struct {
 	Address     	[]Farmaddress       `json:"address" bson:"address"`
 	CreatedTime     time.Time          `json:"created_time" bson:"created_time"`
 	UpdatedTime     time.Time          `json:"updated_time" bson:"updated_time"`
-}
-
-// Farmaddress farm Address
-type Farmaddress struct {
-	ID        primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty"`
-	Address   string             `json:"address" bson:"address" binding:"required"`
-	Province  string             `json:"province" bson:"province" binding:"required"`
-	District  string             `json:"district" bson:"district" binding:"required"`
-	City      string             `json:"city" bson:"city" binding:"required"`
-	ZipCode   string             `json:"zipcode" bson:"zipcode" binding:"required"`
-	CreatedAt time.Time          `json:"created_at" bson:"created_at"`
-	UpdatedAt time.Time          `json:"updated_at" bson:"updated_at"`
 }

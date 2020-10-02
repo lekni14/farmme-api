@@ -12,6 +12,8 @@ import (
 	jwt "github.com/appleboy/gin-jwt/v2"
 	handle_user "farmme-api/api/v1/user"
 	handle_farm "farmme-api/api/v1/farm"
+	handle_cows "farmme-api/api/v1/cow"
+	handle_gen "farmme-api/api/v1/generate"
 )
 
 func Route(route *gin.Engine, connectionDB *mongo.Database) {
@@ -70,8 +72,10 @@ func Route(route *gin.Engine, connectionDB *mongo.Database) {
         c.AbortWithStatus(http.StatusNotFound)
 	})
 	FarmRoute(route, connectionDB, middleware)
+	CowRoute(route, connectionDB, middleware)
+	GenRoute(route, connectionDB, middleware)
 }
-// FarmRoute 
+// FarmRoute  path
 func FarmRoute(route *gin.Engine, connectionDB *mongo.Database, middleware *jwt.GinJWTMiddleware) {
 	farmRepository := repository.FarmRepositoryMongo{
 		ConnectionDB: connectionDB,
@@ -94,6 +98,42 @@ func FarmRoute(route *gin.Engine, connectionDB *mongo.Database, middleware *jwt.
 			api.POST("", farmAPI.AddFarm)
 			// api.GET("/myEvent", eventAPI.MyEvent)
 			
+		}
+	}
+
+}
+// CowRoute in path
+func CowRoute(route *gin.Engine, connectionDB *mongo.Database, middleware *jwt.GinJWTMiddleware) {
+	cowRepository := repository.CowRepositoryMongo{
+		ConnectionDB: connectionDB,
+	}
+	cowAPI := handle_cows.CowAPI{
+		CowRepository: &cowRepository,
+	}
+
+	api := route.Group("/api/v1/cow")
+	{
+		api.Use(middleware.MiddlewareFunc())
+		{
+			api.POST("", cowAPI.AddCow)			
+		}
+	}
+
+}
+// GenRoute path generate
+func GenRoute(route *gin.Engine, connectionDB *mongo.Database, middleware *jwt.GinJWTMiddleware) {
+	genRepository := repository.CowRepositoryMongo{
+		ConnectionDB: connectionDB,
+	}
+	genAPI := handle_gen.GenAPI{
+		GenRepository: &genRepository,
+	}
+
+	api := route.Group("/api/v1/generate")
+	{
+		api.Use(middleware.MiddlewareFunc())
+		{
+			api.POST("", genAPI.AddGen)			
 		}
 	}
 

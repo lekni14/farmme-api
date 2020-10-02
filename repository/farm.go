@@ -13,7 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	// "go.mongodb.org/mongo-driver/mongo/options"
 )
-
+// FarmRepository is a contract for consuming data by business logic layer
 type FarmRepository interface {
 	AddFarm(farm model.Farm) (string, error)
 	ExistByName(name string) (bool, error)
@@ -31,7 +31,6 @@ const (
 //AddFarm new farm 
 func (farmMongo FarmRepositoryMongo) AddFarm(farm model.Farm) (string, error) {
 
-	farm.Product = []model.ProduceFarm{}
 	farm.CreatedTime = time.Now()
 	farm.UpdatedTime = time.Now()
 	res, err := farmMongo.ConnectionDB.Collection(farmCollection).InsertOne(context.TODO(), farm)
