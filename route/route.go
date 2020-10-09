@@ -15,7 +15,7 @@ import (
 	handle_cows "farmme-api/api/v1/cow"
 	handle_gen "farmme-api/api/v1/generate"
 )
-
+// Route main 
 func Route(route *gin.Engine, connectionDB *mongo.Database) {
 	userRepository := repository.UserRepositoryMongo{
 		ConnectionDB: connectionDB,
